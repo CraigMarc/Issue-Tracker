@@ -72,7 +72,7 @@ chai
 chai
 .request(server)
 .keepOpen()
-.get('/api/issues/project')
+.get('/api/issues/apitest')
 
     .end(function(err, res) {
       assert.equal(res.status, 200)
@@ -80,7 +80,54 @@ chai
     done()
     })
   })
+/*single filter*/
 
+  test('View issues on a project with single filter: GET request ', function (done) {
+chai
+.request(server)
+.keepOpen()
+.get('/api/issues/apitest')
+    .end(function(err, res) {
+      assert.equal(res.status, 200)
+      assert.equal(res.body[0], {
+            _id: "646aa0dfeca0082252d7e616",
+              issue_title: "cd",
+              issue_text: "dffd",
+              created_on: "2023-05-21T22:53:19.218Z",
+              updated_on: "2023-05-21T22:53:19.218Z",
+              created_by: "sdsdads ",
+              assigned_to: "",
+              open: true,
+              status_text: "",})
+           
+    done()
+    })
+  })
+
+
+    /*one filter*/
+   test('View issues on a project with one filter: GET request ', function (done) {
+chai
+.request(server)
+.keepOpen()
+.get('/api/issues/filter')
+.query({ _id: "646aac375fe9d61e99905d6e" })
+    .end(function(err, res) {
+      assert.equal(res.status, 200)
+     assert.equal(res.body[0], {
+              _id: "646aac375fe9d61e99905d6e",
+              issue_title: "filter1",
+              issue_text: "filter1",
+              created_on: "2023-05-21T23:41:43.054Z",
+              updated_on: "2023-05-21T23:41:43.055Z",
+              created_by: "filter1",
+              assigned_to: "",
+              open: true,
+              status_text: ""
+            });
+    done()
+    })
+  })
   /*test5*/
   
   test('View issues on a project with multiple filters: GET request ', function (done) {
@@ -88,19 +135,22 @@ chai
 .request(server)
 .keepOpen()
 .get('/api/issues/filter')
+.query({
+            issue_title: "filter2",
+            issue_text: "filter2"
     .end(function(err, res) {
       assert.equal(res.status, 200)
       assert.equal(res.body[0], {
-            _id: "6469424a05237187f5bfdf34",
-              issue_title: "filter title",
-              issue_text: "filter text",
-              created_on: "2023-05-20T21:57:30.858Z",
-              updated_on: "2023-05-20T21:57:30.859Z",
-              created_by: "cm",
+              _id: "646aac445fe9d61e99905d71",
+              issue_title: "filter2",
+              issue_text: "filter2",
+              created_on: "2023-05-21T23:41:56.901Z",
+              updated_on: "2023-05-21T23:41:56.901Z",
+              created_by: "filter2",
               assigned_to: "",
               open: true,
-              status_text: "",})
-           
+              status_text: ""
+            });
     done()
     })
   })
@@ -110,16 +160,16 @@ test("Update one field on an issue: PUT request", function (done) {
         chai
           .request(server)
           .keepOpen()
-          .put("/api/issues/projects")
+          .put("/api/issues/apitest")
           .send({
-            _id: "64681550988b4eac7931b519",
+            _id: "646aa0dfeca0082252d7e616",
             issue_title: "put test"
             
           })
           .end(function (err, res) {
             assert.equal(res.status, 200);
             assert.equal(res.body.result,           "successfully updated");
-            assert.equal(res.body._id, "64681550988b4eac7931b519");
+            assert.equal(res.body._id, "646aa0dfeca0082252d7e616");
             
             done();
           });
@@ -129,9 +179,9 @@ test("Update one field on an issue: PUT request", function (done) {
         chai
           .request(server)
           .keepOpen()
-          .put("/api/issues/projects")
+          .put("/api/issues/apitest")
           .send({
-            _id: "64681550988b4eac7931b519",
+            _id: "646aa0dfeca0082252d7e616",
             issue_title: "put test",
             issue_text: "put test",
             
@@ -139,7 +189,7 @@ test("Update one field on an issue: PUT request", function (done) {
           .end(function (err, res) {
             assert.equal(res.status, 200);
             assert.equal(res.body.result,           "successfully updated");
-            assert.equal(res.body._id, "64681550988b4eac7931b519");
+            assert.equal(res.body._id, "646aa0dfeca0082252d7e616");
             
             done();
           });
@@ -161,7 +211,23 @@ test("Update one field on an issue: PUT request", function (done) {
             done();
           });
       }); 
-
+/*nofields to update*/
+  test("Update an issue with no fields to update: PUT", function (done) {
+        chai
+          .request(server)
+          .keepOpen()
+          .put("/api/issues/projects")
+          .send({
+            _id: "646aa0dfeca0082252d7e616"
+            
+          })
+          .end(function (err, res) {
+            assert.equal(res.status, 200);
+            assert.equal(res.body.error,           "no update field(s) sent");
+            
+            done();
+          });
+      }); 
 /*test9*/
  test("update an issue with an invalid _id: PUT", function (done) {
         chai
@@ -169,7 +235,7 @@ test("Update one field on an issue: PUT request", function (done) {
           .keepOpen()
           .put("/api/issues/projects")
           .send({
-            _id: "646519"
+            _id: "5871dda29faedc3491ff93bb"
             
           })
           .end(function (err, res) {
@@ -185,7 +251,7 @@ test("Update one field on an issue: PUT request", function (done) {
         chai
           .request(server)
           .keepOpen()
-          .put("/api/issues/projects")
+          .delete("/api/issues/projects")
           .send({
             _id: "6469599a203dda466817bffb"
             
@@ -203,7 +269,7 @@ test("Update one field on an issue: PUT request", function (done) {
         chai
           .request(server)
           .keepOpen()
-          .put("/api/issues/projects")
+          .delete("/api/issues/projects")
           .send({
             _id: "6469"
             
@@ -220,7 +286,7 @@ test("Update one field on an issue: PUT request", function (done) {
         chai
           .request(server)
           .keepOpen()
-          .put("/api/issues/projects")
+          .delete("/api/issues/projects")
           .send({
             _id: ""
             
