@@ -190,64 +190,25 @@ res.json({ error: 'could not update', '_id': req.body._id })
 /*start of updates*/
 if (req.body.issue_title != "") {
 issueData.findOneAndUpdate({_id: req.body._id}, {issue_title: req.body.issue_title}, { new: true })
-  .then(()=>{
-       console.log('successfully updated:' + req.body._id); 
-
-    
-  })
-
-.catch((err)=>{
-  return res.json({ error: 'could not update', '_id': req.body._id });
-        console.log(err);
-      
-    })                    
+                   
 }
 
 
 if (!req.body.issue_text != "") {
 issueData.findOneAndUpdate({_id: req.body._id}, {issue_text: req.body.issue_text}, { new: true })
-  .then(()=>{
-       console.log('successfully updated:' + req.body._id); 
-
-    
-  })
-
-.catch((err)=>{
-  return res.json({ error: 'could not update', '_id': req.body._id });
-        console.log(err);
-      
-    })                    
+                  
 }
 
 
 if (req.body.created_by != "") {
 issueData.findOneAndUpdate({_id: req.body._id}, {created_by: req.body.created_by}, { new: true })
-  .then(()=>{
-       console.log('successfully updated:' + req.body._id); 
-
-    
-  })
-
-.catch((err)=>{
-  return res.json({ error: 'could not update', '_id': req.body._id });
-        console.log(err);
-      
-    })                    
+         
 }
 
 
 if (req.body.assigned_to != "") {
 issueData.findOneAndUpdate({_id: req.body._id}, {assigned_to: req.body.assigned_to}, { new: true })
-  .then(()=>{
-       console.log('successfully updated:' + req.body._id); 
- 
-  })
-
-.catch((err)=>{
-  return res.json({ error: 'could not update', '_id': req.body._id });
-        console.log(err);
-      
-    })                    
+          
 }
 
 
@@ -255,38 +216,16 @@ issueData.findOneAndUpdate({_id: req.body._id}, {assigned_to: req.body.assigned_
 
    if (req.body.status_text != "") {
 issueData.findOneAndUpdate({_id: req.body._id}, {status_text: req.body.status_text}, { new: true })
-  .then(()=>{
-       console.log('successfully updated:' + req.body._id); 
- 
-  })
-
-.catch((err)=>{
-  return res.json({ error: 'could not update', '_id': req.body._id });
-        console.log(err);
-      
-    })                    
+            
 }
 
  if (req.body.open == "false") {
 issueData.findOneAndUpdate({_id: req.body._id}, {open: req.body.open}, { new: true })
-  .then(()=>{
-       console.log('successfully updated:' + req.body._id); 
- 
-  })
-
-.catch((err)=>{
-  return res.json({ error: 'could not update', '_id': req.body._id });
-        console.log(err);
-      
-    })                    
+          
 }
 
 issueData.findOneAndUpdate({_id: req.body._id}, {updated_on: new Date()}, { new: true })
-  .then(()=>{
-       console.log('successfully updated:' + req.body._id); 
- 
-  })
-
+  
 .catch((err)=>{
   return res.json({ error: 'could not update', '_id': req.body._id });
         console.log(err);
